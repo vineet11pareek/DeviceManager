@@ -1,14 +1,40 @@
-package com.challenge.DeviceManager.entity;
+package com.challenge.DeviceManager.model;
 
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "device")
 public class Device {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
     private String brand;
+    @Enumerated(EnumType.STRING)
     private DeviceState state;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    public Device(String id, String name, String brand, DeviceState state) {
+    //TODO: We can create another property to have the updated
+    // time stamp everytime whenever device get updated
+
+
+    public Device() {
+    }
+
+    public Device(String id, String name, DeviceState state, String brand, LocalDateTime createdAt) {
         this.id = id;
+        this.name = name;
+        this.state = state;
+        this.brand = brand;
+        this.createdAt = createdAt;
+    }
+
+    public Device(String name, String brand, DeviceState state) {
         this.name = name;
         this.brand = brand;
         this.state = state;
@@ -46,6 +72,14 @@ public class Device {
         this.state = state;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public String toString() {
         return "Device{" +
@@ -53,6 +87,7 @@ public class Device {
                 ", name='" + name + '\'' +
                 ", brand='" + brand + '\'' +
                 ", state=" + state +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }
