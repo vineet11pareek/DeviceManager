@@ -1,4 +1,4 @@
-package com.challenge.DeviceManager;
+package com.challenge.devicemanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

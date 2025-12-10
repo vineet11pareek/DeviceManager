@@ -1,9 +1,9 @@
-package com.challenge.DeviceManager.mapper;
+package com.challenge.devicemanager.mapper;
 
-import com.challenge.DeviceManager.dto.DeviceRequest;
-import com.challenge.DeviceManager.dto.DeviceResponse;
-import com.challenge.DeviceManager.model.Device;
-import com.challenge.DeviceManager.model.DeviceState;
+import com.challenge.devicemanager.dto.DeviceRequest;
+import com.challenge.devicemanager.dto.DeviceResponse;
+import com.challenge.devicemanager.model.Device;
+import com.challenge.devicemanager.model.DeviceState;
 
 public class DeviceMapper {
 

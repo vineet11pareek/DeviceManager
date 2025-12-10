@@ -1,4 +1,4 @@
-package com.challenge.DeviceManager.model;
+package com.challenge.devicemanager.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;

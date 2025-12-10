@@ -1,6 +1,6 @@
-package com.challenge.DeviceManager.dto;
+package com.challenge.devicemanager.dto;
 
-import com.challenge.DeviceManager.model.DeviceState;
+import com.challenge.devicemanager.model.DeviceState;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package com.challenge.DeviceManager.exceptions;
+package com.challenge.devicemanager.exceptions;
 
 public class DeviceInUseException extends RuntimeException{
     public DeviceInUseException(String id) {

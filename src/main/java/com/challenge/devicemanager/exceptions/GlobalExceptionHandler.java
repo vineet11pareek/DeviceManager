@@ -1,4 +1,4 @@
-package com.challenge.DeviceManager.exceptions;
+package com.challenge.devicemanager.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

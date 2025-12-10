@@ -1,18 +1,15 @@
-package com.challenge.DeviceManager.controller;
+package com.challenge.devicemanager.controller;
 
-import com.challenge.DeviceManager.dto.DeviceRequest;
-import com.challenge.DeviceManager.dto.DeviceResponse;
-import com.challenge.DeviceManager.model.Device;
-import com.challenge.DeviceManager.model.DeviceState;
-import com.challenge.DeviceManager.service.DeviceService;
+import com.challenge.devicemanager.dto.DeviceRequest;
+import com.challenge.devicemanager.dto.DeviceResponse;
+import com.challenge.devicemanager.model.DeviceState;
+import com.challenge.devicemanager.service.DeviceService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

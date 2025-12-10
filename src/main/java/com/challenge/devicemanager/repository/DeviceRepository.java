@@ -1,7 +1,7 @@
-package com.challenge.DeviceManager.repository;
+package com.challenge.devicemanager.repository;
 
-import com.challenge.DeviceManager.model.Device;
-import com.challenge.DeviceManager.model.DeviceState;
+import com.challenge.devicemanager.model.Device;
+import com.challenge.devicemanager.model.DeviceState;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

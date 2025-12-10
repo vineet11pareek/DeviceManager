@@ -1,21 +1,17 @@
-package com.challenge.DeviceManager.service;
+package com.challenge.devicemanager.service;
 
-import com.challenge.DeviceManager.dto.DeviceRequest;
-import com.challenge.DeviceManager.dto.DeviceResponse;
-import com.challenge.DeviceManager.exceptions.DeviceInUseException;
-import com.challenge.DeviceManager.exceptions.DeviceNotFoundException;
-import com.challenge.DeviceManager.mapper.DeviceMapper;
-import com.challenge.DeviceManager.model.Device;
-import com.challenge.DeviceManager.model.DeviceState;
-import com.challenge.DeviceManager.repository.DeviceRepository;
+import com.challenge.devicemanager.dto.DeviceRequest;
+import com.challenge.devicemanager.dto.DeviceResponse;
+import com.challenge.devicemanager.exceptions.DeviceInUseException;
+import com.challenge.devicemanager.exceptions.DeviceNotFoundException;
+import com.challenge.devicemanager.mapper.DeviceMapper;
+import com.challenge.devicemanager.model.DeviceState;
+import com.challenge.devicemanager.repository.DeviceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,7 +27,7 @@ public class DeviceService {
     public List<DeviceResponse> getAllDevices() {
         var deviceList = deviceRepo.findAll();
         var list = deviceList.stream()
-                .map(DeviceMapper :: pojoToResponseDTO)
+                .map(DeviceMapper::pojoToResponseDTO)
                 .toList();
         return list;
 
@@ -44,7 +40,7 @@ public class DeviceService {
         if (device.getState() == DeviceState.IN_USE) {
             throw new DeviceInUseException("Device cannot be updated");
         }
-        DeviceMapper.updateRequestDTOToPojo(deviceRequest,device);
+        DeviceMapper.updateRequestDTOToPojo(deviceRequest, device);
         var saved = deviceRepo.save(device);
 
         return DeviceMapper.pojoToResponseDTO(saved);
@@ -53,12 +49,12 @@ public class DeviceService {
     public String changeState(String deviceId, String state) {
         var device = deviceRepo.findById(deviceId)
                 .orElseThrow(() -> new DeviceNotFoundException("Device not found"));
-        if(state !=null && !state.isEmpty() && !device.getState().equals(state.toUpperCase())){
-            if(state.equalsIgnoreCase(DeviceState.IN_USE.toString()))
+        if (state != null && !state.isEmpty() && !device.getState().equals(state.toUpperCase())) {
+            if (state.equalsIgnoreCase(DeviceState.IN_USE.toString()))
                 device.setState(DeviceState.IN_USE);
-            if(state.equalsIgnoreCase(DeviceState.AVAILABLE.toString()))
+            if (state.equalsIgnoreCase(DeviceState.AVAILABLE.toString()))
                 device.setState(DeviceState.AVAILABLE);
-            if(state.equalsIgnoreCase(DeviceState.INACTIVE.toString()))
+            if (state.equalsIgnoreCase(DeviceState.INACTIVE.toString()))
                 device.setState(DeviceState.INACTIVE);
 
             return deviceRepo.save(device).getId();
@@ -89,11 +85,11 @@ public class DeviceService {
     }
 
     public String deleteById(String deviceId) {
-            var device = deviceRepo.findById(deviceId).orElseThrow(() -> new DeviceNotFoundException(deviceId));
-            if(device !=null && !device.getState().equals(DeviceState.IN_USE)){
-                deviceRepo.deleteById(deviceId);
-                return deviceId;
-            }
+        var device = deviceRepo.findById(deviceId).orElseThrow(() -> new DeviceNotFoundException(deviceId));
+        if (device != null && !device.getState().equals(DeviceState.IN_USE)) {
+            deviceRepo.deleteById(deviceId);
+            return deviceId;
+        }
         throw new DeviceInUseException("Device cannot be Deleted");
     }
 }
