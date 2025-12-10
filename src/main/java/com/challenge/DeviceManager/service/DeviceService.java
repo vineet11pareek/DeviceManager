@@ -2,6 +2,8 @@ package com.challenge.DeviceManager.service;
 
 import com.challenge.DeviceManager.dto.DeviceRequest;
 import com.challenge.DeviceManager.dto.DeviceResponse;
+import com.challenge.DeviceManager.exceptions.DeviceInUseException;
+import com.challenge.DeviceManager.exceptions.DeviceNotFoundException;
 import com.challenge.DeviceManager.mapper.DeviceMapper;
 import com.challenge.DeviceManager.model.Device;
 import com.challenge.DeviceManager.model.DeviceState;
@@ -38,9 +40,9 @@ public class DeviceService {
     public DeviceResponse updateDeviceById(String deviceId, DeviceRequest deviceRequest) {
 
         var device = deviceRepo.findById(deviceId)
-                .orElseThrow(() -> new RuntimeException("Device not found"));
+                .orElseThrow(() -> new DeviceNotFoundException("Device not found"));
         if (device.getState() == DeviceState.IN_USE) {
-            throw new RuntimeException("Device cannot be updated");
+            throw new DeviceInUseException("Device cannot be updated");
         }
         DeviceMapper.updateRequestDTOToPojo(deviceRequest,device);
         var saved = deviceRepo.save(device);
@@ -50,7 +52,7 @@ public class DeviceService {
 
     public String changeState(String deviceId, String state) {
         var device = deviceRepo.findById(deviceId)
-                .orElseThrow(() -> new RuntimeException("Device not found"));
+                .orElseThrow(() -> new DeviceNotFoundException("Device not found"));
         if(state !=null && !state.isEmpty() && !device.getState().equals(state.toUpperCase())){
             if(state.equalsIgnoreCase(DeviceState.IN_USE.toString()))
                 device.setState(DeviceState.IN_USE);
@@ -61,12 +63,12 @@ public class DeviceService {
 
             return deviceRepo.save(device).getId();
         }
-        return "Device state not changed";
+        throw new DeviceInUseException("Device cannot be updated");
     }
 
     public DeviceResponse getDeviceById(String deviceId) {
         var device = deviceRepo.findById(deviceId)
-                .orElseThrow(() -> new RuntimeException("Device not found"));
+                .orElseThrow(() -> new DeviceNotFoundException("Device not found"));
         return DeviceMapper.pojoToResponseDTO(device);
     }
 
@@ -86,19 +88,12 @@ public class DeviceService {
         return list;
     }
 
-    public boolean deleteById(String deviceId) {
-        try {
-            var device = deviceRepo.findById(deviceId).orElse(null);
+    public String deleteById(String deviceId) {
+            var device = deviceRepo.findById(deviceId).orElseThrow(() -> new DeviceNotFoundException(deviceId));
             if(device !=null && !device.getState().equals(DeviceState.IN_USE)){
                 deviceRepo.deleteById(deviceId);
-                return true;
+                return deviceId;
             }
-
-
-        }catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        return false;
-
+        throw new DeviceInUseException("Device cannot be Deleted");
     }
 }
