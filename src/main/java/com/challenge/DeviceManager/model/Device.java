@@ -12,9 +12,12 @@ public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String brand;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private DeviceState state;
     @CreationTimestamp
     private LocalDateTime createdAt;
