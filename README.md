@@ -119,3 +119,9 @@ mvn clean package -DskipTests
 docker compose up --build
 ```
 ---
+## Future Improvements
+1. Pagination for device list
+2. Caching support (Redis)
+3. Create a new API to delete based on brand and device state
+4. Authentication & authorization
+5. Add logic to convert state in any case and then make it according to our enum values
