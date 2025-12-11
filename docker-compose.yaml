@@ -20,6 +20,22 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+    
+  devicemanager:
+    build: .
+    container_name: devicemanager-app
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/device_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      - postgres
+    restart: always
+    
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4
