@@ -104,3 +104,18 @@ DB_URL=jdbc:postgresql://localhost:5432/device_db
 DB_USERNAME=user
 DB_PASSWORD=postgres
 ```
+
+## Dockerfile
+```
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
+COPY target/devicemanager-0.0.1-SNAPSHOT.jar devicemanager.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "devicemanager.jar"]
+```
+## Build & run:
+```
+mvn clean package -DskipTests
+docker compose up --build
+```
+---
