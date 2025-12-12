@@ -100,7 +100,7 @@ public class DeviceService {
      */
     public DeviceResponse getDeviceById(String deviceId) {
         var device = deviceRepo.findById(deviceId)
-                .orElseThrow(() -> new DeviceNotFoundException("Device not found"));
+                .orElseThrow(() -> new DeviceNotFoundException(deviceId));
         return DeviceMapper.pojoToResponseDTO(device);
     }
 
